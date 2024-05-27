@@ -1,9 +1,14 @@
+import ButtonGradient from "./assets/ButtonGradient";
+import Button from "./components/Button";
 
-function App() {
+const App = () => {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+   <>
+    <Button href="#login" className="pt-[4.75rem] lg:pt-[5.25rem]">
+      rkdfnkdm
+    </Button>
+    <ButtonGradient/>
+   </>
   )
 }
 
