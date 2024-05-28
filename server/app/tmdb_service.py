@@ -60,22 +60,22 @@ def recommended_movies(mood):
         'feliz': '35',   # Comedy
         'triste': '18',     # Drama
         'animado': '28', # Action
-        'assutado': '27',  # Horror
-        'romântico': '10749',# Romance
+        'assustado': '27',  # Horror
+        'romantico': '10749',# Romance
         'misterioso': '9648',# Mystery
-        'nostálgico': '10751',# Family
+        'nostalgico': '10751',# Family
         'sombrio': '80', # Crime
         'inspirado': '36', # Histórico
         'reflexivo': '9648', # Mistério ou Drama Psicológico
-        'eufórico': '53',   # Thriller
+        'euforico': '53',   # Thriller
         'tenso': '53', # Suspense
         'curioso': '14',  # fantasy
         'sozinho': '878', #Science Fiction 
         'esperançoso': '99',# documentary,
         'aventureiro': '37', #western
         'resiliente': '10752', #War
-        'brincalhão': '35',
-        'melancólico': '18'
+        'brincalhao': '35',
+        'melancolico': '18'
     }
 
     genre = all_genres.get(mood.lower()) 

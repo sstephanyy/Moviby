@@ -15,9 +15,7 @@ const Header = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      setIsLoggedIn(true);
-    }
+    setIsLoggedIn(!!token); // Set isLoggedIn based on whether token exists
   }, []);
 
   const toggleNavigation = () => {
