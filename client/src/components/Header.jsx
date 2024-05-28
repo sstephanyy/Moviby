@@ -68,11 +68,10 @@ const Header = () => {
         >
           Criar conta
         </a>
-        <Button className="hidden lg:flex" >
-        <Link to="/login">
-          Entrar
-        </Link>
+        <Button className="hidden lg:flex">
+          <Link to="/login">Entrar</Link>
         </Button>
+
 
         <Button
           className="ml-auto lg:hidden"
