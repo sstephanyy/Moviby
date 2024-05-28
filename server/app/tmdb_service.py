@@ -71,7 +71,7 @@ def recommended_movies(mood):
         'tenso': '53', # Suspense
         'curioso': '14',  # fantasy
         'sozinho': '878', #Science Fiction 
-        'esperançoso': '99',# documentary,
+        'esperancoso': '99',# documentary,
         'aventureiro': '37', #western
         'resiliente': '10752', #War
         'brincalhao': '35',
