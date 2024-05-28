@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Section from "./Section";
+import { useNavigate } from "react-router-dom"; 
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -15,6 +18,7 @@ const Login = () => {
         password,
       });
       localStorage.setItem("token", response.data.access_token);
+      navigate("/"); 
     } catch (error) {
       console.error(error);
     }
