@@ -66,7 +66,7 @@ const Header = () => {
           href="#registrar"
           className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block"
         >
-          Criar conta
+          <Link to="/registrar">Criar conta</Link>
         </a>
         <Button className="hidden lg:flex">
           <Link to="/login">Entrar</Link>
