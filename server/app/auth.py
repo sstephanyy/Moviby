@@ -3,6 +3,7 @@ from .models import User
 from . import db
 from flask_jwt_extended import create_access_token
 from flask_cors import cross_origin
+from datetime import timedelta
 
 
 auth_bp = Blueprint('auth', __name__)
@@ -33,9 +34,11 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
+    expires_in = timedelta(days=1)
+
     user = User.query.filter_by(email=email).first()
     if user and user.check_password(password):
-        access_token = create_access_token(identity={'email': user.email})
+        access_token = create_access_token(identity={'email': user.email}, expires_delta=expires_in)
         return jsonify(access_token=access_token), 200
 
     return jsonify({"msg": "Invalid credentials"}), 401
