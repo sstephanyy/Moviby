@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom';
+import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
 import movieImage from '../assets/movie.svg';
 import { navigation } from '../constants';
 import Button from './Button';
 import MenuSvg from '../assets/MenuSvg';
-import { HamburgerMenu } from './design/Header';
 import { useState } from 'react';
 
 const Header = () => {
@@ -15,14 +15,17 @@ const Header = () => {
   const toggleNavigation = () => {
     if(openNavigation){
       setOpenNavigation(false);
+      enablePageScroll();
     }else{
       setOpenNavigation(true);
+      disablePageScroll();
     }
   };
 
   const handleClick = () => {
     if (!openNavigation) return;
 
+    enablePageScroll();
     setOpenNavigation(false);
   };
 
