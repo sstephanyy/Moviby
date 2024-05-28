@@ -1,28 +1,26 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import ButtonGradient from "./assets/ButtonGradient";
 import Header from "./components/Header";
 import { Main } from "./components/Main";
 import Movies from "./components/Movies";
+import Login from "./components/Login";
 
 const App = () => {
-  return (
-    <Router>
-      <>
-        <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
-          <Header />
-          <Main />
 
+  return (
+    <BrowserRouter>
+          <Header />
           <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/movies/:genre" element={<Movies />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Main />} />
+            <Route path="/movies/:mood" element={<Movies />} />
           </Routes>
 
-        </div>
 
         <ButtonGradient />
-      </>
-    </Router>
+    
+    </BrowserRouter>
   );
 };
 

@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
 import movieImage from '../assets/movie.svg';
@@ -28,6 +28,7 @@ const Header = () => {
     enablePageScroll();
     setOpenNavigation(false);
   };
+
 
   return (
     <div className={`fixed top-0 left-0 w-full z-50 border-b border-n-6 lg:bg-n-8/90 lg:backdrop-blur-sm ${
@@ -67,8 +68,10 @@ const Header = () => {
         >
           Criar conta
         </a>
-        <Button className="hidden lg:flex" href="#login">
+        <Button className="hidden lg:flex" >
+        <Link to="/login">
           Entrar
+        </Link>
         </Button>
 
         <Button

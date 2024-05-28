@@ -1,49 +1,40 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { getMovie } from '../services/api';
 
-const Movies = () => {
-  const { mood } = useParams(); 
+
+const Movies = ({ mood }) => {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
-        const response = await getMovie(mood); 
-        setMovies(response); 
+        const moviesData = await getMovie(mood);
+        console.log(moviesData);
+        setMovies(moviesData);
       } catch (error) {
-        setError('Failed to fetch movies');
-      } finally {
-        setLoading(false);
+        console.error('Error fetching movies:', error);
       }
     };
 
     fetchMovies();
+
+    return () => {
+      
+    };
   }, [mood]); 
-
-  if (loading) {
-    return <div>Carregando...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
 
   return (
     <div>
-      <h2>Movies in {mood} mood</h2>
-      <div className="movie-list">
-        {movies.map(movie => (
-          <div key={movie.id} className="movie">
-            <h3>{movie.title}</h3>
-            <p>{movie.overview}</p>
-          </div>
+      <h2>{mood}</h2>
+      <ul>
+        {movies.map((movie) => (
+          <li key={movie.id}>{movie.title}</li>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };
 
 export default Movies;
+
+
