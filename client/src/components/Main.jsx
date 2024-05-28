@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import Section from "./Section";
 import Button from "./Button";
 import curve from "../assets/curve.png";
@@ -38,27 +40,27 @@ export const Main = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
           {moods.map((mood) => (
-            <div
-              key={mood.id}
-              className="mb-2 p-4 rounded-lg relative"
-            >
-              <div
-                className="absolute inset-0 cursor-pointer"
-                style={{
-                  borderRadius: "5px",
-                  padding: "4px",
-                  background: "linear-gradient(225deg, #FFC876, #79FFF7, #9F53FF, #FF98E2, #FFC876)",
-                  WebkitMask:
-                    "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
-                  WebkitMaskComposite: "xor",
-                  maskComposite: "exclude",
-                  position: "absolute",
-                  content: '""',
-                  inset: 0,
-                }}
-              />
-              {mood.title}
-            </div>
+            <Link to={`/movies/${mood.title}`}>
+              <div className="mb-2 p-4 rounded-lg relative">
+                <div
+                  className="absolute inset-0 cursor-pointer"
+                  style={{
+                    borderRadius: "5px",
+                    padding: "2px",
+                    background:
+                      "linear-gradient(225deg, #FFC876, #79FFF7, #9F53FF, #FF98E2, #FFC876)",
+                    WebkitMask:
+                      "linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)",
+                    WebkitMaskComposite: "xor",
+                    maskComposite: "exclude",
+                    position: "absolute",
+                    content: '""',
+                    inset: 0,
+                  }}
+                />
+                {mood.title}
+              </div>
+            </Link>
           ))}
         </div>
       </div>
