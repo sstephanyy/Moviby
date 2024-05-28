@@ -3,17 +3,16 @@ import { useParams } from 'react-router-dom';
 import { getMovie } from '../services/api';
 
 const Movies = () => {
-  const { genre } = useParams(); // Fetch genre from URL params
+  const { mood } = useParams(); 
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Fetch movies based on mood when component mounts
     const fetchMovies = async () => {
       try {
-        const response = await getMovie(genre); // Call API to fetch movies
-        setMovies(response); // Assuming the response contains movie data
+        const response = await getMovie(mood); 
+        setMovies(response); 
       } catch (error) {
         setError('Failed to fetch movies');
       } finally {
@@ -22,7 +21,7 @@ const Movies = () => {
     };
 
     fetchMovies();
-  }, [genre]); // Fetch movies whenever genre changes
+  }, [mood]); 
 
   if (loading) {
     return <div>Carregando...</div>;
@@ -34,13 +33,12 @@ const Movies = () => {
 
   return (
     <div>
-      <h2>Movies in {genre} genre</h2>
+      <h2>Movies in {mood} mood</h2>
       <div className="movie-list">
         {movies.map(movie => (
           <div key={movie.id} className="movie">
             <h3>{movie.title}</h3>
             <p>{movie.overview}</p>
-            {/* Add more movie details as needed */}
           </div>
         ))}
       </div>
