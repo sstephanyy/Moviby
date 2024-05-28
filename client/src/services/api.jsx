@@ -4,13 +4,11 @@ const BASE_URL = 'http://127.0.0.1:5000';
 
 export const getMovie = async (mood) => {
     try {
-        console.log('Fetching movies for mood:', mood);
-
-
+        console.log('Fetching movies for mood:', mood)
         const response = await axios.get(`${BASE_URL}/recomendar`, {
-            params: { mood },
+            params: { mood: mood },
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('jwt_token')}`
+                Authorization: `Bearer ${localStorage.getItem('token')}`
             }
         });
         console.log(response.data);

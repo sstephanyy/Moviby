@@ -1,40 +1,38 @@
-import React, { useEffect, useState } from 'react';
-import { getMovie } from '../services/api';
-
+import React, { useEffect, useState } from "react";
+import { getMovie } from "../services/api";
 
 const Movies = ({ mood }) => {
   const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     const fetchMovies = async () => {
-      try {
-        const moviesData = await getMovie(mood);
-        console.log(moviesData);
-        setMovies(moviesData);
-      } catch (error) {
-        console.error('Error fetching movies:', error);
+      if (mood) {
+        try {
+          const moviesData = await getMovie(mood);
+          console.log(moviesData);
+          setMovies(moviesData);
+        } catch (error) {
+          console.error("Error fetching movies:", error);
+        }
       }
     };
 
     fetchMovies();
-
-    return () => {
-      
-    };
-  }, [mood]); 
+  }, [mood]);
 
   return (
-    <div>
-      <h2>{mood}</h2>
+    <div style={{padding: "128px"}}>
       <ul>
         {movies.map((movie) => (
-          <li key={movie.id}>{movie.title}</li>
+          <div key={movie.id}>
+            <h3>{movie.title}</h3>
+            <p>{movie.genre}</p>
+          </div>
         ))}
       </ul>
+      <h2></h2>
     </div>
   );
 };
 
 export default Movies;
-
-
