@@ -1,13 +1,16 @@
 import ButtonGradient from "./assets/ButtonGradient";
-import Button from "./components/Button";
+import Header from "./components/Header";
 
 const App = () => {
   return (
    <>
-    <Button href="#login" className="pt-[4.75rem] lg:pt-[5.25rem]">
-      rkdfnkdm
-    </Button>
-    <ButtonGradient/>
+    <div className="pt-[4.75rem] lg:pt-[5.25rem] overflow-hidden">
+      <Header />
+        
+    </div>
+
+      <ButtonGradient />
+
    </>
   )
 }
