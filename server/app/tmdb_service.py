@@ -18,15 +18,25 @@ def movie_exists(movie_id):
 # Update an existing movie with new data
 def update_movie(movie, data):
     movie.title = data['title']
-    movie.genre = data['genre']
     movie.vote_average = data['vote_average']
     movie.overview = data['overview']
+    
+    # Check if the 'genre' key exists in the data dictionary
+    genre = data.get('genre')
+    if genre:
+        movie.genre = genre
+    
     db.session.commit()
 
 # Fetch movies from the API and return only the random one
 def get_movie_by_genre_from_api(genre):
-    url = f"https://api.themoviedb.org/3/discover/movie?api_key={TMDB_API_KEY}&with_genres={genre}"
-    response = requests.get(url)
+    url = f"https://api.themoviedb.org/3/discover/movie"
+    params = {
+        'api_key': TMDB_API_KEY,
+        'with_genres': genre,
+        'language': 'pt-BR'  
+    }
+    response = requests.get(url, params=params)
     movies_data = response.json().get('results', [])
     
     if not movies_data:
