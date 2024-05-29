@@ -4,23 +4,8 @@ import Section from "./Section";
 import Button from "./Button";
 import curve from "../assets/curve.png";
 import { moods } from "../constants/mood";
-import { getMovie } from "../services/api";
-import { useState } from "react";
 
 export const Main = () => {
-
-
-  const [movies, setMovies] = useState([]);
-
-  const handleMoodSelect = async (mood) => {
-    try {
-      const moviesData = await getMovie(mood);
-      setMovies(moviesData);
-    } catch (error) {
-      console.error('Error fetching movies:', error);
-    }
-  };
-
   return (
     <Section className="pt-[12rem] -mt-[5.25rem] mb-8" customPaddings id="main">
       <div className="container relative">
@@ -55,8 +40,7 @@ export const Main = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
           {moods.map((mood) => (
-            <button onClick={() => handleMoodSelect(mood.title)}>
-            <Link to={`/movies/${mood.title}`}>
+            <Link key={mood.title} to={`/movies/${mood.title}`}>
               <div className="mb-2 p-4 rounded-lg relative">
                 <div
                   className="absolute inset-0 cursor-pointer"
@@ -77,7 +61,6 @@ export const Main = () => {
                 {mood.title} {mood.emoji}
               </div>
             </Link>
-          </button>
           ))}
         </div>
       </div>
