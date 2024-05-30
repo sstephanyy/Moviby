@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react"; 
 
 import Section from "./Section";
 import Button from "./Button";
@@ -6,6 +7,21 @@ import curve from "../assets/curve.png";
 import { moods } from "../constants/mood";
 
 export const Main = () => {
+
+  const navigate = useNavigate(); 
+
+  const token = localStorage.getItem("token");
+  const isLoggedIn = !!token;
+
+  const handleMoodClick = (mood) => {
+    if (!isLoggedIn) {
+      navigate('/login'); 
+    } else {
+      navigate(`/movies/${mood.title}`);
+    }      
+    
+  };
+
   return (
     <Section className="pt-[12rem] -mt-[5.25rem] mb-8" customPaddings id="main">
       <div className="container relative">
@@ -40,10 +56,10 @@ export const Main = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
           {moods.map((mood) => (
-            <Link key={mood.title} to={`/movies/${mood.title}`}>
+            <div key={mood.title} onClick={() => handleMoodClick(mood)} style={{ cursor: "pointer" }}>
               <div className="mb-2 p-4 rounded-lg relative">
                 <div
-                  className="absolute inset-0 cursor-pointer"
+                  className="absolute inset-0"
                   style={{
                     borderRadius: "5px",
                     padding: "2px",
@@ -60,7 +76,7 @@ export const Main = () => {
                 />
                 {mood.title} {mood.emoji}
               </div>
-            </Link>
+            </div>
           ))}
         </div>
       </div>
