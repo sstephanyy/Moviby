@@ -5,18 +5,25 @@ import movieImage from '../assets/movie.svg';
 import { navigation } from '../constants';
 import Button from './Button';
 import MenuSvg from '../assets/MenuSvg';
-import Login from './Login';
+import { jwtDecode } from "jwt-decode";
 
 const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [openNavigation, setOpenNavigation] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const token = localStorage.getItem("token");
+  const isLoggedIn = !!token;
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    setIsLoggedIn(!!token); // Set isLoggedIn based on whether token exists
-  }, []);
+    if (isLoggedIn) {
+      const decodedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+      if (decodedToken.exp < currentTime) {
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+    }
+  });
 
   const toggleNavigation = () => {
     if (openNavigation) {
@@ -30,8 +37,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    setIsLoggedIn(false);
-    navigate("/");
+    navigate("/login");
   };
 
   const handleClick = () => {
@@ -70,9 +76,9 @@ const Header = () => {
           </div>
         ) : (
           <>
-            <a href="#registrar" className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block">
-              <Link to="/registrar">Criar conta</Link>
-            </a>
+            <Link to="/registrar" className="button hidden mr-8 text-n-1/50 transition-colors hover:text-n-1 lg:block">
+              Criar conta
+            </Link>
             <Button className="hidden lg:flex">
               <Link to="/login">Entrar</Link>
             </Button>
@@ -86,5 +92,4 @@ const Header = () => {
     </div>
   );
 };
-
 export default Header;
