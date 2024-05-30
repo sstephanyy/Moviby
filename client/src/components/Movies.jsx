@@ -81,7 +81,7 @@ const Movies = () => {
           }}
         >
           <ul className="space-y-4">
-            {movies.map((movie) => (
+            {movies.length > 0 && movies.map((movie) => (
               <li
                 key={movie.id}
                 className="text-gray-900 shadow-md rounded-lg p-4"
