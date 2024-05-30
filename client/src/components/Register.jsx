@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import axios from "axios";
 import Section from "./Section";
 import { useNavigate } from "react-router-dom"; 
 
-
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const navigate = useNavigate(); 
-
+  const usernameRef = useRef();
+  const emailRef = useRef();
+  const passwordRef = useRef();
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const username = usernameRef.current.value;
+    const email = emailRef.current.value;
+    const password = passwordRef.current.value;
 
     try {
       const response = await axios.post("http://localhost:5000/auth/registrar", {
@@ -22,7 +24,6 @@ const Register = () => {
       });
 
       if (response.status === 201) {
-        console.log("Registration successful!");
         navigate("/login"); 
       } else {
         console.error("Registration failed:", response.data.msg);
@@ -42,10 +43,10 @@ const Register = () => {
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            ref={usernameRef}
             required
             className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            autoComplete="off"
           />
           <label htmlFor="email" className="text-gray-100">
             Email:
@@ -53,10 +54,10 @@ const Register = () => {
           <input
             type="email"
             id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            ref={emailRef}
             required
             className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            autoComplete="off"
           />
           <label htmlFor="password" className="text-gray-100">
             Senha:
@@ -64,10 +65,10 @@ const Register = () => {
           <input
             type="password"
             id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            ref={passwordRef}
             required
             className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            autoComplete="off"
           />
           <button
             type="submit"
