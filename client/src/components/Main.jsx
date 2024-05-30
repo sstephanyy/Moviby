@@ -17,7 +17,11 @@ export const Main = () => {
     if (!isLoggedIn) {
       navigate('/login'); 
     } else {
-      navigate(`/movies/${mood.title}`);
+      const urlTitle = mood.title
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase()
+    navigate(`/movies/${urlTitle}`);
     }      
     
   };

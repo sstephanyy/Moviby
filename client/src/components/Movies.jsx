@@ -92,7 +92,7 @@ const Movies = () => {
                   <strong>Genêro:</strong> {movie.genre}
                 </p>
                 <p className="text">
-                  <strong>Avaliação:</strong> {movie.vote_average.toFixed()}
+                  <strong>Avaliação:</strong> {movie.vote_average.toFixed()}⭐
                 </p>
               </li>
             ))}
