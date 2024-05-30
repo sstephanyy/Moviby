@@ -51,7 +51,7 @@ export const Main = () => {
           <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8">
             A pergunta é: Como você está se sentindo hoje?
           </p>
-          <Button white onClick={handleMoodClick}>Começar agora</Button>
+          <Button white>Começar agora</Button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4">
