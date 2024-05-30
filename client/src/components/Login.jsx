@@ -1,18 +1,18 @@
-import React, { useRef } from "react";
+import React from "react";
 import axios from "axios";
 import Section from "./Section";
 import { useNavigate } from "react-router-dom";
+import FormInput from "../utilities/ValidateForms";
 
 const Login = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
     try {
       const response = await axios.post("http://localhost:5000/auth/login", {
@@ -30,25 +30,23 @@ const Login = () => {
     <Section className="flex justify-center items-center h-screen">
       <div className="bg-gray-900/50 rounded-lg p-8 shadow-md">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-          <label htmlFor="email" className="text-gray-100">
-            Email:
-          </label>
-          <input
+          <FormInput
+            label="Email"
             type="email"
             id="email"
-            ref={emailRef}
             required
-            className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            validator={(value) => /\S+@\S+\.\S+/.test(value)}
+            errorMessage="Email ou senha incorretos."
+            autoComplete="off"
           />
-          <label htmlFor="password" className="text-gray-100">
-            Senha:
-          </label>
-          <input
+          <FormInput
+            label="Senha"
             type="password"
             id="password"
-            ref={passwordRef}
             required
-            className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            validator={(value) => value.length >= 6}
+            errorMessage="Email ou senha incorretos."
+            autoComplete="off"
           />
           <button
             type="submit"

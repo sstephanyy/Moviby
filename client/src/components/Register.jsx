@@ -1,30 +1,31 @@
-import React, { useRef } from "react";
+import React from "react";
 import axios from "axios";
 import Section from "./Section";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+import FormInput from "../utilities/ValidateForms";
 
 const Register = () => {
-  const usernameRef = useRef();
-  const emailRef = useRef();
-  const passwordRef = useRef();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const username = usernameRef.current.value;
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
+    const username = e.target.username.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
 
     try {
-      const response = await axios.post("http://localhost:5000/auth/registrar", {
-        username,
-        email,
-        password,
-      });
+      const response = await axios.post(
+        "http://localhost:5000/auth/registrar",
+        {
+          username,
+          email,
+          password,
+        }
+      );
 
       if (response.status === 201) {
-        navigate("/login"); 
+        navigate("/login");
       } else {
         console.error("Registration failed:", response.data.msg);
       }
@@ -37,37 +38,32 @@ const Register = () => {
     <Section className="flex justify-center items-center h-screen">
       <div className="bg-gray-900/50 rounded-lg p-8 shadow-md">
         <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
-          <label htmlFor="username" className="text-gray-100">
-            Nome:
-          </label>
-          <input
+          <FormInput
+            label="Nome"
             type="text"
             id="username"
-            ref={usernameRef}
             required
-            className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            validator={(value) => value.length >= 3}
+            errorMessage="O nome deve ter pelo menos 3 caracteres."
             autoComplete="off"
           />
-          <label htmlFor="email" className="text-gray-100">
-            Email:
-          </label>
-          <input
+
+           <FormInput
+            label="Email"
             type="email"
             id="email"
-            ref={emailRef}
             required
-            className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            validator={(value) => /\S+@\S+\.\S+/.test(value)}
+            errorMessage="Email inválido."
             autoComplete="off"
           />
-          <label htmlFor="password" className="text-gray-100">
-            Senha:
-          </label>
-          <input
+          <FormInput
+            label="Senha"
             type="password"
             id="password"
-            ref={passwordRef}
             required
-            className="rounded-md p-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            validator={(value) => value.length >= 6}
+            errorMessage="A senha deve ter pelo menos 6 caracteres."
             autoComplete="off"
           />
           <button
