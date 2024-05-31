@@ -12,7 +12,7 @@ export const navigation = [
     {
       id: "2",
       title: "Meus filmes",
-      url: "#meus-filmes",
+      url: "/meus-filmes",
     },
     {
         id: "3",
