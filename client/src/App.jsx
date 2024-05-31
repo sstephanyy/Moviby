@@ -18,8 +18,23 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/registrar" element={<Register />} />
           <Route path="/" element={<Main />} />
-          <Route path="/movies/:mood" element={<Movies />} />
-          <Route path="/meus-filmes" element={<FavoriteMovies />} />
+
+          <Route
+            path="/movies/:mood"
+            element={
+              <FavoriteMoviesProvider>
+                <Movies />
+              </FavoriteMoviesProvider>
+            }
+          />
+          <Route
+            path="/meus-filmes"
+            element={
+              <FavoriteMoviesProvider>
+                <FavoriteMovies />
+              </FavoriteMoviesProvider>
+            }
+          />
         </Routes>
         <ButtonGradient />
       </FavoriteMoviesProvider>
