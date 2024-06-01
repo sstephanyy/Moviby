@@ -1,10 +1,5 @@
-
-
-import React, { useEffect, useState } from "react";
 import { useFavoriteMovies } from "../utilities/FavoriteMoviesContext";
 import Section from "./Section";
-
-
 
 const FavoriteMovies = () => {
   const { favoriteMovies } = useFavoriteMovies();
