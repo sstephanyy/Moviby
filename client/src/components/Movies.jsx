@@ -119,10 +119,16 @@ const Movies = () => {
                         height={24}
                       />
                     </button>
+
+                  
+
                   </div>
                   <p className="text-gray-700 mb-2">{movie.overview}</p>
                   <p className="text mb-1">
                     <strong>Genêro:</strong> {movie.genre}
+                  </p>
+                  <p className="text mb-1">
+                    <strong>Data de lançamento:</strong> {movie.release_year}
                   </p>
                   <p className="text">
                     <strong>Avaliação:</strong> {movie.vote_average.toFixed()}⭐

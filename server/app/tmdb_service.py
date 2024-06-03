@@ -6,29 +6,27 @@ import random
 
 TMDB_API_KEY = os.getenv('TMDB_API_KEY')
 
-# Check database first
 def get_movies_by_genre_from_db(genre):
     return Movie.query.filter_by(genre=genre).all()
 
-
-# Check if a movie with the given ID exists in the database
 def movie_exists(movie_id):
     return Movie.query.filter_by(id=movie_id).first() is not None
 
-# Update an existing movie with new data
 def update_movie(movie, data):
     movie.title = data['title']
     movie.vote_average = data['vote_average']
     movie.overview = data['overview']
+    movie.release_year = extract_release_year(data['release_date'])
     
-    # Check if the 'genre' key exists in the data dictionary
     genre = data.get('genre')
     if genre:
         movie.genre = genre
     
     db.session.commit()
 
-# Fetch movies from the API and return only the random one
+def extract_release_year(release_date):
+    return int(release_date.split('-')[0])
+
 def get_movie_by_genre_from_api(genre):
     url = f"https://api.themoviedb.org/3/discover/movie"
     params = {
@@ -42,29 +40,34 @@ def get_movie_by_genre_from_api(genre):
     if not movies_data:
         return None
     
-    data = random.choice(movies_data)
+    existing_movie_ids = [movie.id for movie in Movie.query.all()]
+    new_movies_data = [movie for movie in movies_data if movie['id'] not in existing_movie_ids]
+
+    if not new_movies_data:
+        new_movies_data = movies_data
+    
+    data = random.choice(new_movies_data)
+    release_year = extract_release_year(data['release_date'])
     
     movie = Movie(
         id=data['id'],
         title=data['title'],
         genre=genre,
         vote_average=data['vote_average'],
-        overview=data['overview']
+        overview=data['overview'],
+        release_year=release_year
     )
 
-    # Check if the movie already exists in the database
     existing_movie = Movie.query.filter_by(id=movie.id).first()
     if existing_movie:
-        # If the movie exists, update its data
         update_movie(existing_movie, data)
         return existing_movie
     else:
-        # If the movie doesn't exist, add it to the database
         db.session.add(movie)
         db.session.commit()
         return movie
 
-# Function to recommend movies based on mood
+
 def recommended_movies(mood):
     all_genres = {
         'feliz': '35',   # Comedy
@@ -95,8 +98,6 @@ def recommended_movies(mood):
     
     movie = get_movie_by_genre_from_api(genre)
     if movie:
-        # If movie is successfully fetched from the API, return it as a list
         return [movie.to_dict()]
     
-    # If movies are found in the database or fetched from the API, return them
     return sorted([movie.to_dict()], key=lambda x: x['vote_average'], reverse=True)

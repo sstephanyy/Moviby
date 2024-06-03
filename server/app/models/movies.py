@@ -8,7 +8,10 @@ class Movie(db.Model):
     genre = db.Column(db.String(80), nullable=False)
     vote_average = db.Column(db.Float, nullable=False)
     overview = db.Column(db.String(1000), nullable=True)
-
+    trailer_url = db.Column(db.String(255), nullable=True)
+    release_year = db.Column(db.Integer, nullable=True)
+    duration = db.Column(db.Interval, nullable=True)
+    
     # need to convert your SQLAlchemy models into a format that can be easily serialized to JSON.
     def to_dict(self):
         return {
@@ -16,5 +19,8 @@ class Movie(db.Model):
             'title': self.title,
             'genre': self.genre,
             'vote_average': self.vote_average,
-            'overview': self.overview
+            'overview': self.overview,
+            'trailer_url': self.trailer_url,
+            'release_year': self.release_year,
+            'duration': self.duration
         }
