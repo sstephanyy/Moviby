@@ -10,7 +10,7 @@ class Movie(db.Model):
     overview = db.Column(db.String(1000), nullable=True)
     trailer_url = db.Column(db.String(255), nullable=True)
     release_year = db.Column(db.Integer, nullable=True)
-    duration = db.Column(db.Interval, nullable=True)
+    duration = db.Column(db.String(30), nullable=True)
     
     # need to convert your SQLAlchemy models into a format that can be easily serialized to JSON.
     def to_dict(self):
