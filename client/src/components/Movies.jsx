@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { useFavoriteMovies } from "../utilities/FavoriteMoviesContext";
 import Section from "./Section";
 import bookmark from "../assets/bookmark.png";
+import { formatDuration } from "../utilities/formatDuration";
 
 const Movies = () => {
   const { mood } = useParams();
@@ -45,14 +46,12 @@ const Movies = () => {
     const movie = movies.find((m) => m.id === movieId);
     if (movie) {
       if (favoriteMovies.some((favMovie) => favMovie.id === movieId)) {
-        dispatch({ type: 'REMOVE_FAVORITE', id: movieId });
+        dispatch({ type: "REMOVE_FAVORITE", id: movieId });
       } else {
-        dispatch({ type: 'ADD_FAVORITE', movie });
+        dispatch({ type: "ADD_FAVORITE", movie });
       }
     }
   };
-
-
 
   if (loading)
     return (
@@ -92,6 +91,8 @@ const Movies = () => {
             borderRadius: "16px",
             boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
             border: "1px solid rgba(255, 255, 255, 0.3)",
+            width: "36%", 
+            height: "110%",
           }}
         >
           <ul className="space-y-4">
@@ -109,8 +110,12 @@ const Movies = () => {
                       className="flex items-center justify-between"
                       onClick={() => handleBookmark(movie.id)}
                     >
-                       <span className="text-sm">
-                        {favoriteMovies.some((favMovie) => favMovie.id === movie.id) ? "Remover" : "Salvar"}
+                      <span className="text-sm">
+                        {favoriteMovies.some(
+                          (favMovie) => favMovie.id === movie.id
+                        )
+                          ? "Remover"
+                          : "Salvar"}
                       </span>
                       <img
                         src={bookmark}
@@ -119,16 +124,24 @@ const Movies = () => {
                         height={24}
                       />
                     </button>
-
-                  
-
                   </div>
+
+                  <iframe
+                    src={movie.trailer_url}
+                    title="Movie Trailer"
+                    width="610"
+                    height="315"
+                    frameBorder="0"
+                    allowFullScreen
+                    className="my-3"
+                  ></iframe>
+
                   <p className="text-gray-700 mb-2">{movie.overview}</p>
                   <p className="text mb-1">
-                    <strong>Genêro:</strong> {movie.genre}
+                    <strong>Data de lançamento:</strong> {movie.release_year}
                   </p>
                   <p className="text mb-1">
-                    <strong>Data de lançamento:</strong> {movie.release_year}
+                    <strong>Duração:</strong> {formatDuration(movie.duration)}
                   </p>
                   <p className="text">
                     <strong>Avaliação:</strong> {movie.vote_average.toFixed()}⭐
