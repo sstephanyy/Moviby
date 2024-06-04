@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, useEffect } from 'react';
+import React, { createContext, useReducer, useContext } from 'react';
 
 const FavoriteMoviesContext = createContext();
 
@@ -12,6 +12,12 @@ const favoriteMoviesReducer = (state, action) => {
       const updatedStateRemove = state.filter(movie => movie.id !== action.id);
       localStorage.setItem('favoriteMovies', JSON.stringify(updatedStateRemove));
       return updatedStateRemove;
+    case 'UPDATE_CATEGORY':
+      const updatedStateUpdate = state.map(movie =>
+        movie.id === action.id ? { ...movie, category: action.category } : movie
+      );
+      localStorage.setItem('favoriteMovies', JSON.stringify(updatedStateUpdate));
+      return updatedStateUpdate;
     default:
       return state;
   }
@@ -23,8 +29,13 @@ export const FavoriteMoviesProvider = ({ children }) => {
     return localData ? JSON.parse(localData) : [];
   });
 
+  const deleteMovie = (id) => {
+    dispatch({ type: 'REMOVE_FAVORITE', id });
+  };
+  
+
   return (
-    <FavoriteMoviesContext.Provider value={{ favoriteMovies, dispatch }}>
+    <FavoriteMoviesContext.Provider value={{ favoriteMovies, dispatch, deleteMovie }}>
       {children}
     </FavoriteMoviesContext.Provider>
   );
