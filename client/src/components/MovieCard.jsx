@@ -1,23 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
+import trash from "../assets/trash.png";
+import { useFavoriteMovies } from "../utilities/FavoriteMoviesContext";
 
-export const MovieCard = ({ title, tags }) => {
+export const MovieCard = ({ id, title, onDragStart }) => {
+    const { deleteMovie } = useFavoriteMovies();
+
+  const handleDeleteMovie = () => {
+    deleteMovie(id);
+
+  };
+
+  const handleDragStart = () => {
+    onDragStart(id);
+  };
+
   return (
     <div
-      className="max-w-sm rounded overflow-hidden shadow-lg  m-4"
+      className="max-w-sm rounded overflow-hidden shadow-lg cursor-grab m-4"
       draggable="true"
+      onDragStart={handleDragStart}
+      onDragEnd={() => onDragStart(null)}
     >
       <div className="w-full text-center text-white p-2 bg-indigo-500 rounded-md">
-        <div className="font-bold text-xl">{title}</div>
-        <p className="text-gray-700 text-base">
-          {tags.map((tag, idx) => (
-            <span
-              key={idx}
-              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"
-            >
-              #{tag}
-            </span>
-          ))}
-        </p>
+        <div className="flex justify-between items-center">
+          <div className="font-bold ">{title}</div>
+          <button onClick={handleDeleteMovie}>
+            <img
+              src={trash}
+              width={24}
+              height={24}
+              alt="lixo"
+              className="cursor-pointer"
+            />
+          </button>
+        </div>
       </div>
     </div>
   );
