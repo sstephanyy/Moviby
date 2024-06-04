@@ -1,4 +1,3 @@
-// src/components/Movies.jsx
 import React, { useEffect, useState } from "react";
 import { getMovie } from "../services/api";
 import { useParams } from "react-router-dom";
@@ -48,7 +47,11 @@ const Movies = () => {
       if (favoriteMovies.some((favMovie) => favMovie.id === movieId)) {
         dispatch({ type: "REMOVE_FAVORITE", id: movieId });
       } else {
-        dispatch({ type: "ADD_FAVORITE", movie });
+        dispatch({ 
+          type: "ADD_FAVORITE", 
+          movie: movie,
+          category: "toWatch"
+        });
       }
     }
   };
@@ -82,17 +85,15 @@ const Movies = () => {
   };
 
   return (
-    <Section className="">
+    <Section className="px-8 sm:px-0">
       <div className="flex justify-center items-center min-h-screen">
         <div
-          className="container mx-auto p-4 shadow-xl rounded-lg w-full sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-1/2 "
+          className="container mx-auto p-4 shadow-xl rounded-lg w-full sm:w-11/12 md:w-3/4 lg:w-2/3 xl:w-[36%] mt-24"
           style={{
             background: "rgba(255, 255, 255, 0.9)",
             borderRadius: "16px",
             boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)",
             border: "1px solid rgba(255, 255, 255, 0.3)",
-            width: "36%", 
-            height: "110%",
           }}
         >
           <ul className="space-y-4">
@@ -129,11 +130,11 @@ const Movies = () => {
                   <iframe
                     src={movie.trailer_url}
                     title="Movie Trailer"
-                    width="610"
-                    height="315"
+                    width="100%"
+                    height="100%"
+                    className="w-full sm:h-[265px] md:h-[490px] lg:h-[490px]"
                     frameBorder="0"
                     allowFullScreen
-                    className="my-3"
                   ></iframe>
 
                   <p className="text-gray-700 mb-2">{movie.overview}</p>

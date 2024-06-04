@@ -5,7 +5,7 @@ const FavoriteMoviesContext = createContext();
 const favoriteMoviesReducer = (state, action) => {
   switch (action.type) {
     case 'ADD_FAVORITE':
-      const updatedStateAdd = [...state, action.movie];
+      const updatedStateAdd = [...state, { ...action.movie, category: action.category }];
       localStorage.setItem('favoriteMovies', JSON.stringify(updatedStateAdd));
       return updatedStateAdd;
     case 'REMOVE_FAVORITE':
