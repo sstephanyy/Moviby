@@ -16,6 +16,23 @@ def get_saved_movies():
 
     return jsonify(movies_dict), 200
 
+@saved_movies_bp.route('/adicionar_filme', methods=['POST'])
+@jwt_required()
+def add_saved_movies():
+    data = request.json
+
+    category = data.get('category')
+
+    new_movie = Movie(   
+        category=category,
+    )
+
+    db.session.add(new_movie)
+    db.session.commit()
+
+    return jsonify({'message': 'Movie added successfully'}), 201
+
+
 
 @saved_movies_bp.route('/atualizar_filme', methods=['PUT'])
 @jwt_required()
