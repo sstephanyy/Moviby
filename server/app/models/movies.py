@@ -1,6 +1,5 @@
 from app import db
 
-
 class Movie(db.Model):
     __tablename__ = 'movies'
     id = db.Column(db.Integer, primary_key=True)
@@ -11,10 +10,13 @@ class Movie(db.Model):
     trailer_url = db.Column(db.String(255), nullable=True)
     release_year = db.Column(db.Integer, nullable=True)
     duration = db.Column(db.String(30), nullable=True)
-    
-    # need to convert your SQLAlchemy models into a format that can be easily serialized to JSON.
+    category = db.Column(db.Enum('toWatch', 'watched', 'favorite', 'hated', name='movie_category'), nullable=True)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('movies', lazy=True))
+
     def to_dict(self):
-        return {
+        movie_dict = {
             'id': self.id,
             'title': self.title,
             'genre': self.genre,
@@ -22,5 +24,12 @@ class Movie(db.Model):
             'overview': self.overview,
             'trailer_url': self.trailer_url,
             'release_year': self.release_year,
-            'duration': self.duration
+            'duration': self.duration,
         }
+
+        if self.category:
+            movie_dict['category'] = self.category.name
+        else:
+            movie_dict['category'] = None  
+
+        return movie_dict

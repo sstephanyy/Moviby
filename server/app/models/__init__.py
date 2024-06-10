@@ -1,2 +1,2 @@
-from .users import User  # Importação relativa dentro do pacote models
+from .users import User  
 from .movies import Movie
