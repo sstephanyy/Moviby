@@ -29,6 +29,9 @@ def create_app():
     from .views.movie import main_bp
     app.register_blueprint(main_bp)
 
+    from .views.savedMovies import saved_movies_bp
+    app.register_blueprint(saved_movies_bp)
+
     CORS(app)
 
     return app
